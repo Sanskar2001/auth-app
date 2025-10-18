@@ -1,27 +1,61 @@
 import { useState } from "react";
 import ToolbarButton from "./ToolbarButton";
 import Icon from "./Icon";
-const TextEditor = ({ onSubmit }: { onSubmit: (text: string) => void }) => {
+
+interface TextEditorProps {
+  onSubmit: (text: string) => void;
+  requireAuth?: (callback: () => void) => void;
+}
+
+const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
   const [text, setText] = useState("");
   const [activeButtons, setActiveButtons] = useState<Set<string>>(new Set());
 
   function toggleButton(buttonName: string) {
-    setActiveButtons((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(buttonName)) {
-        newSet.delete(buttonName);
-      } else {
-        newSet.add(buttonName);
-      }
-      return newSet;
-    });
+    const callback = () => {
+      setActiveButtons((prev) => {
+        const newSet = new Set(prev);
+        if (newSet.has(buttonName)) {
+          newSet.delete(buttonName);
+        } else {
+          newSet.add(buttonName);
+        }
+        return newSet;
+      });
+    };
+
+    if (requireAuth) {
+      requireAuth(callback);
+    } else {
+      callback();
+    }
   }
 
   function submit() {
-    const trimmed = text.trim();
-    if (!trimmed) return;
-    onSubmit(trimmed);
-    setText("");
+    const callback = () => {
+      const trimmed = text.trim();
+      if (!trimmed) return;
+      onSubmit(trimmed);
+      setText("");
+    };
+
+    if (requireAuth) {
+      requireAuth(callback);
+    } else {
+      callback();
+    }
+  }
+
+  function handleTextChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    const callback = () => {
+      setText(e.target.value);
+    };
+
+    if (requireAuth) {
+      requireAuth(callback);
+    } else {
+      callback();
+    }
   }
 
   return (
@@ -31,7 +65,7 @@ const TextEditor = ({ onSubmit }: { onSubmit: (text: string) => void }) => {
           <div className="flex items-center gap-2 mb-3">
             <div className="bg-gray-100 rounded-xl p-1">
               <div className="flex items-center gap-4">
-                <select className="text-xs rounded-md border border-gray-200 px-3 py-2 text-gray-700 bg-white">
+                <select className="text-xs rounded-md border border-gray-200 p-2 text-gray-700 bg-white">
                   <option>Paragraph</option>
                 </select>
 
@@ -92,7 +126,7 @@ const TextEditor = ({ onSubmit }: { onSubmit: (text: string) => void }) => {
           <div className="relative">
             <textarea
               value={text}
-              onChange={(e) => setText(e.target.value)}
+              onChange={handleTextChange}
               placeholder="How are you feeling today?"
               className="w-full resize-none min-h-28 outline-none placeholder:text-gray-400 text-gray-800 p-1"
             />
