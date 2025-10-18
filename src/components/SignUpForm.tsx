@@ -5,7 +5,7 @@ interface SignUpFormProps {
   onSuccess?: () => void;
 }
 
-export default function SignUpForm({ onSuccess }: SignUpFormProps) {
+const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -186,4 +186,6 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
       </button>
     </form>
   );
-}
+};
+
+export default SignUpForm;

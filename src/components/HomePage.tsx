@@ -22,12 +22,12 @@ const HomePage = () => {
     closeModals,
   } = useAuthModal();
 
-  function handleSubmit(text: string) {
+  const handleSubmit = (text: string) => {
     setPosts((prev) => [
       { name: "You", text, avatar: "https://i.pravatar.cc/80?img=68" },
       ...prev,
     ]);
-  }
+  };
 
   return (
     <div className="min-h-screen bg-white">

@@ -5,7 +5,7 @@ import SignUp from "./components/SignUp";
 import { AuthProvider } from "./contexts/AuthContext";
 import HomePage from "./components/HomePage";
 
-function AppContent() {
+const AppContent = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
@@ -13,12 +13,14 @@ function AppContent() {
       <Route path="/signup" element={<SignUp />} />
     </Routes>
   );
-}
+};
 
-export default function App() {
+const App = () => {
   return (
     <AuthProvider>
       <AppContent />
     </AuthProvider>
   );
-}
+};
+
+export default App;

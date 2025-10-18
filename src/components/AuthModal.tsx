@@ -11,7 +11,7 @@ interface AuthModalProps {
   onClose: () => void;
 }
 
-export default function AuthModal({
+const AuthModal = ({
   iconName,
   title,
   subtitle,
@@ -19,7 +19,7 @@ export default function AuthModal({
   footerContent,
   isOpen,
   onClose,
-}: AuthModalProps) {
+}: AuthModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -32,7 +32,6 @@ export default function AuthModal({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bg-gray-100 rounded-xl p-8">
-          {/* Close Button */}
           <button
             onClick={onClose}
             className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
@@ -52,26 +51,22 @@ export default function AuthModal({
             </svg>
           </button>
 
-          {/* Icon */}
           <div className="flex justify-center mb-6">
             <div className="h-12 w-12 bg-gray-200 rounded-full flex items-center justify-center">
               <Icon name={iconName} className="h-6 w-6 text-gray-900" />
             </div>
           </div>
 
-          {/* Title */}
           <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">
             {title}
           </h1>
           <p className="text-gray-600 text-center mb-8">{subtitle}</p>
-
-          {/* Form Content */}
           {children}
-
-          {/* Footer Content */}
           <div className="text-center mt-6">{footerContent}</div>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default AuthModal;

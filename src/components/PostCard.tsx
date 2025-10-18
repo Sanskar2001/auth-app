@@ -11,7 +11,7 @@ interface PostCardProps {
   requireAuth?: (callback: () => void) => void;
 }
 
-function PostCard({ name, text, avatar, requireAuth }: PostCardProps) {
+const PostCard = ({ name, text, avatar }: PostCardProps) => {
   const [showNotImplementedModal, setShowNotImplementedModal] = useState(false);
 
   const showNotImplemented = () => {
@@ -53,6 +53,6 @@ function PostCard({ name, text, avatar, requireAuth }: PostCardProps) {
       />
     </div>
   );
-}
+};
 
 export default PostCard;

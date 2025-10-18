@@ -9,13 +9,13 @@ interface AuthCardProps {
   footerContent: ReactNode;
 }
 
-export default function AuthCard({
+const AuthCard = ({
   iconName,
   title,
   subtitle,
   children,
   footerContent,
-}: AuthCardProps) {
+}: AuthCardProps) => {
   return (
     <div className="min-h-screen bg-white">
       <header className="h-16 flex">
@@ -57,4 +57,6 @@ export default function AuthCard({
       </main>
     </div>
   );
-}
+};
+
+export default AuthCard;

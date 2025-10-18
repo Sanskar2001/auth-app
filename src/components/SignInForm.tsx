@@ -6,7 +6,7 @@ interface SignInFormProps {
   onSuccess?: () => void;
 }
 
-export default function SignInForm({ onSuccess }: SignInFormProps) {
+const SignInForm = ({ onSuccess }: SignInFormProps) => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
@@ -78,7 +78,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Email/Username Field */}
       <div>
         <label
           htmlFor="email"
@@ -127,7 +126,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         )}
       </div>
 
-      {/* General Error Message */}
       {errors.general && (
         <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
           {errors.general}
@@ -169,4 +167,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       </button>
     </form>
   );
-}
+};
+
+export default SignInForm;

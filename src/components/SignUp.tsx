@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import AuthCard from "./AuthCard";
 import SignUpForm from "./SignUpForm";
 
-export default function SignUp() {
+const SignUp = () => {
   return (
     <AuthCard
       iconName="login"
@@ -23,4 +23,6 @@ export default function SignUp() {
       <SignUpForm />
     </AuthCard>
   );
-}
+};
+
+export default SignUp;

@@ -5,10 +5,7 @@ interface NotImplementedModalProps {
   onClose: () => void;
 }
 
-export default function NotImplementedModal({
-  isOpen,
-  onClose,
-}: NotImplementedModalProps) {
+const NotImplementedModal = ({ isOpen, onClose }: NotImplementedModalProps) => {
   if (!isOpen) return null;
 
   return (
@@ -46,4 +43,6 @@ export default function NotImplementedModal({
       </div>
     </div>
   );
-}
+};
+
+export default NotImplementedModal;

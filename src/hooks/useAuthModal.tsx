@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
-export function useAuthModal() {
+export const useAuthModal = () => {
   const [showSignInModal, setShowSignInModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { isAuthenticated } = useAuth();
@@ -37,4 +37,4 @@ export function useAuthModal() {
     switchToSignIn,
     closeModals,
   };
-}
+};
