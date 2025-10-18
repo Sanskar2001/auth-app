@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Avatar from "./Avatar";
 import ToolbarButton from "./ToolbarButton";
 import Icon from "./Icon";
+import NotImplementedModal from "./NotImplementedModal";
 
 interface PostCardProps {
   name: string;
@@ -10,30 +12,10 @@ interface PostCardProps {
 }
 
 function PostCard({ name, text, avatar, requireAuth }: PostCardProps) {
-  const handleInteraction = (callback: () => void) => {
-    if (requireAuth) {
-      requireAuth(callback);
-    } else {
-      callback();
-    }
-  };
+  const [showNotImplementedModal, setShowNotImplementedModal] = useState(false);
 
-  const handleLike = () => {
-    handleInteraction(() => {
-      console.log("Liked post");
-    });
-  };
-
-  const handleComment = () => {
-    handleInteraction(() => {
-      console.log("Comment on post");
-    });
-  };
-
-  const handleShare = () => {
-    handleInteraction(() => {
-      console.log("Share post");
-    });
+  const showNotImplemented = () => {
+    setShowNotImplementedModal(true);
   };
   return (
     <div className="bg-gray-100 rounded-2xl p-2 w-full max-w-2xl">
@@ -54,16 +36,21 @@ function PostCard({ name, text, avatar, requireAuth }: PostCardProps) {
         </div>
       </div>
       <div className="flex items-center gap-1 text-gray-500 mt-1 pl-4">
-        <ToolbarButton onClick={handleLike}>
+        <ToolbarButton onClick={showNotImplemented}>
           <Icon name="heart" className="h-4 w-4" />
         </ToolbarButton>
-        <ToolbarButton onClick={handleComment}>
+        <ToolbarButton onClick={showNotImplemented}>
           <Icon name="comment" className="h-5 w-5" />
         </ToolbarButton>
-        <ToolbarButton onClick={handleShare}>
+        <ToolbarButton onClick={showNotImplemented}>
           <Icon name="share" className="h-4 w-4" />
         </ToolbarButton>
       </div>
+
+      <NotImplementedModal
+        isOpen={showNotImplementedModal}
+        onClose={() => setShowNotImplementedModal(false)}
+      />
     </div>
   );
 }

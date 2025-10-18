@@ -32,16 +32,6 @@ function HomePage() {
     ]);
   }
 
-  const handleSignInSuccess = () => {
-    closeModals();
-    login({ name: "John Doe", email: "john@example.com" });
-  };
-
-  const handleSignUpSuccess = () => {
-    closeModals();
-    login({ name: "John Doe", email: "john@example.com" });
-  };
-
   return (
     <div className="min-h-screen bg-white">
       <header className="h-16 flex">
@@ -113,7 +103,7 @@ function HomePage() {
           </>
         }
       >
-        <SignInForm onSuccess={handleSignInSuccess} />
+        <SignInForm onSuccess={closeModals} />
       </AuthModal>
 
       <AuthModal
@@ -134,7 +124,7 @@ function HomePage() {
           </>
         }
       >
-        <SignUpForm onSuccess={handleSignUpSuccess} />
+        <SignUpForm onSuccess={closeModals} />
       </AuthModal>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ToolbarButton from "./ToolbarButton";
 import Icon from "./Icon";
+import NotImplementedModal from "./NotImplementedModal";
 
 interface TextEditorProps {
   onSubmit: (text: string) => void;
@@ -10,25 +11,10 @@ interface TextEditorProps {
 const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
   const [text, setText] = useState("");
   const [activeButtons, setActiveButtons] = useState<Set<string>>(new Set());
+  const [showNotImplementedModal, setShowNotImplementedModal] = useState(false);
 
-  function toggleButton(buttonName: string) {
-    const callback = () => {
-      setActiveButtons((prev) => {
-        const newSet = new Set(prev);
-        if (newSet.has(buttonName)) {
-          newSet.delete(buttonName);
-        } else {
-          newSet.add(buttonName);
-        }
-        return newSet;
-      });
-    };
-
-    if (requireAuth) {
-      requireAuth(callback);
-    } else {
-      callback();
-    }
+  function showNotImplemented() {
+    setShowNotImplementedModal(true);
   }
 
   function submit() {
@@ -72,19 +58,19 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
                 <div className="flex items-center gap-2">
                   <ToolbarButton
                     isActive={activeButtons.has("bold")}
-                    onClick={() => toggleButton("bold")}
+                    onClick={showNotImplemented}
                   >
                     <Icon name="bold" className="h-4 w-4" />
                   </ToolbarButton>
                   <ToolbarButton
                     isActive={activeButtons.has("italic")}
-                    onClick={() => toggleButton("italic")}
+                    onClick={showNotImplemented}
                   >
                     <Icon name="italic" className="h-4 w-4" />
                   </ToolbarButton>
                   <ToolbarButton
                     isActive={activeButtons.has("underline")}
-                    onClick={() => toggleButton("underline")}
+                    onClick={showNotImplemented}
                   >
                     <Icon name="underline" className="h-4 w-4" />
                   </ToolbarButton>
@@ -95,7 +81,7 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
                 <div className="flex items-center gap-2">
                   <ToolbarButton
                     isActive={activeButtons.has("align")}
-                    onClick={() => toggleButton("align")}
+                    onClick={showNotImplemented}
                   >
                     <Icon name="align" className="h-4 w-4" />
                   </ToolbarButton>
@@ -103,12 +89,12 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
 
                 <div className="h-6 w-px bg-gray-300"></div>
                 <div className="flex items-center gap-2">
-                  <ToolbarButton>
+                  <ToolbarButton onClick={showNotImplemented}>
                     <span className="text-xs text-gray-500">99</span>
                   </ToolbarButton>
                   <ToolbarButton
                     isActive={activeButtons.has("code")}
-                    onClick={() => toggleButton("code")}
+                    onClick={showNotImplemented}
                   >
                     <Icon name="code" className="h-4 w-4" />
                   </ToolbarButton>
@@ -116,7 +102,7 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
               </div>
             </div>
             <div className="ml-auto">
-              <ToolbarButton>
+              <ToolbarButton onClick={showNotImplemented}>
                 <div className="bg-[#FFD9D9] w-full h-full rounded-md items-center flex justify-center">
                   <img width={15} height={15} src={"./trash.png"} />
                 </div>
@@ -134,13 +120,13 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
         </div>
         <div className="flex items-center gap-2 border-t border-gray-100 p-3">
           <div className="flex items-center gap-2">
-            <ToolbarButton>
+            <ToolbarButton onClick={showNotImplemented}>
               <Icon name="plus" className="h-4 w-4" />
             </ToolbarButton>
-            <ToolbarButton>
+            <ToolbarButton onClick={showNotImplemented}>
               <Icon name="mic" className="h-4 w-4" />
             </ToolbarButton>
-            <ToolbarButton>
+            <ToolbarButton onClick={showNotImplemented}>
               <Icon name="video" className="h-4 w-4" />
             </ToolbarButton>
           </div>
@@ -154,6 +140,11 @@ const TextEditor = ({ onSubmit, requireAuth }: TextEditorProps) => {
           </div>
         </div>
       </div>
+
+      <NotImplementedModal
+        isOpen={showNotImplementedModal}
+        onClose={() => setShowNotImplementedModal(false)}
+      />
     </div>
   );
 };
