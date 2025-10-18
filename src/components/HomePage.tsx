@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [posts, setPosts] = useState(sampleData);
-  const { isAuthenticated, login, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
   const {
     showSignInModal,
     showSignUpModal,
