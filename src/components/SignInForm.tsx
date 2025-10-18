@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 interface SignInFormProps {
   onSuccess?: () => void;
@@ -7,6 +8,7 @@ interface SignInFormProps {
 
 export default function SignInForm({ onSuccess }: SignInFormProps) {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -20,7 +22,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
       ...formData,
       [name]: value,
     });
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -56,17 +57,20 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
     setIsLoading(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const success = await login(formData.email, formData.password);
 
-      // Call onSuccess if provided (for modal), otherwise navigate
-      if (onSuccess) {
-        onSuccess();
+      if (success) {
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigate("/");
+        }
       } else {
-        navigate("/");
+        setErrors({ general: "Invalid email or password" });
       }
     } catch (error) {
       console.error("Sign in error:", error);
+      setErrors({ general: "An error occurred during sign in" });
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +103,6 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         )}
       </div>
 
-      {/* Password Field */}
       <div>
         <label
           htmlFor="password"
@@ -124,7 +127,13 @@ export default function SignInForm({ onSuccess }: SignInFormProps) {
         )}
       </div>
 
-      {/* Sign In Button */}
+      {/* General Error Message */}
+      {errors.general && (
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg">
+          {errors.general}
+        </div>
+      )}
+
       <button
         type="submit"
         disabled={isLoading}

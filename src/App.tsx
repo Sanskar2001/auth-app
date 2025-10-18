@@ -34,13 +34,11 @@ function HomePage() {
 
   const handleSignInSuccess = () => {
     closeModals();
-    // Simulate successful login
     login({ name: "John Doe", email: "john@example.com" });
   };
 
   const handleSignUpSuccess = () => {
     closeModals();
-    // Simulate successful signup
     login({ name: "John Doe", email: "john@example.com" });
   };
 
@@ -97,7 +95,6 @@ function HomePage() {
         </div>
       </main>
 
-      {/* Sign In Modal */}
       <AuthModal
         iconName="login"
         title="Sign in to continue"
@@ -119,7 +116,6 @@ function HomePage() {
         <SignInForm onSuccess={handleSignInSuccess} />
       </AuthModal>
 
-      {/* Sign Up Modal */}
       <AuthModal
         iconName="login"
         title="Create an account to continue"

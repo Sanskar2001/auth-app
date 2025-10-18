@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 import Icon from "./Icon";
 
 interface AuthCardProps {
@@ -18,7 +18,6 @@ export default function AuthCard({
 }: AuthCardProps) {
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
       <header className="h-16 flex">
         <div className="w-full px-6 flex items-center justify-between">
           <div className="flex items-center gap-2 text-gray-900">
@@ -33,7 +32,6 @@ export default function AuthCard({
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="flex justify-center items-center min-h-[calc(100vh-4rem)]">
         <div className="w-full max-w-md">
           <div className="bg-gray-100 rounded-2xl p-2">
@@ -45,17 +43,14 @@ export default function AuthCard({
                 </div>
               </div>
 
-              {/* Title */}
               <h1 className="text-2xl font-bold text-gray-900 text-center mb-2">
                 {title}
               </h1>
               <p className="text-gray-600 text-center mb-8">{subtitle}</p>
 
-              {/* Form Content */}
               {children}
             </div>
 
-            {/* Footer Content */}
             <div className="text-center mt-4 p-2">{footerContent}</div>
           </div>
         </div>

@@ -9,7 +9,7 @@ import {
 interface AuthContextType {
   isAuthenticated: boolean;
   user: { name: string; email: string } | null;
-  login: (user: { name: string; email: string }) => void;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -21,7 +21,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     null
   );
 
-  // Load authentication state from localStorage on component mount
   useEffect(() => {
     const savedAuth = localStorage.getItem("auth");
     if (savedAuth) {
@@ -39,23 +38,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  const login = (userData: { name: string; email: string }) => {
-    setIsAuthenticated(true);
-    setUser(userData);
-    // Save to localStorage
-    localStorage.setItem(
-      "auth",
-      JSON.stringify({
-        isAuth: true,
-        userData: userData,
-      })
+  const login = async (email: string, password: string): Promise<boolean> => {
+    // Valid accounts
+    const validAccounts = [
+      { email: "demo@example.com", password: "password123", name: "Demo User" },
+      { email: "test@user.com", password: "testpass", name: "Test User" },
+    ];
+
+    // Check if credentials match any valid account
+    const validAccount = validAccounts.find(
+      (account) => account.email === email && account.password === password
     );
+
+    if (validAccount) {
+      const userData = { name: validAccount.name, email: validAccount.email };
+      setIsAuthenticated(true);
+      setUser(userData);
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({
+          isAuth: true,
+          userData: userData,
+        })
+      );
+      return true;
+    }
+
+    return false;
   };
 
   const logout = () => {
     setIsAuthenticated(false);
     setUser(null);
-    // Remove from localStorage
+
     localStorage.removeItem("auth");
   };
 

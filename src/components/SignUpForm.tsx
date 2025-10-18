@@ -21,7 +21,7 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
       ...formData,
       [name]: value,
     });
-    // Clear error when user starts typing
+
     if (errors[name]) {
       setErrors({
         ...errors,
@@ -63,10 +63,8 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
     setIsLoading(true);
 
     try {
-      // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      // Call onSuccess if provided (for modal), otherwise navigate
       if (onSuccess) {
         onSuccess();
       } else {
@@ -81,7 +79,6 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Email/Username Field */}
       <div>
         <label
           htmlFor="email"
@@ -106,7 +103,6 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
         )}
       </div>
 
-      {/* Password Field */}
       <div>
         <label
           htmlFor="password"
@@ -131,7 +127,6 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
         )}
       </div>
 
-      {/* Repeat Password Field */}
       <div>
         <label
           htmlFor="repeatPassword"
@@ -156,7 +151,6 @@ export default function SignUpForm({ onSuccess }: SignUpFormProps) {
         )}
       </div>
 
-      {/* Sign Up Button */}
       <button
         type="submit"
         disabled={isLoading}

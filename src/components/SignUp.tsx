@@ -1,18 +1,8 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthCard from "./AuthCard";
 import SignUpForm from "./SignUpForm";
-import { useAuth } from "../contexts/AuthContext";
 
 export default function SignUp() {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-
-  const handleSignUpSuccess = () => {
-    // Simulate successful signup
-    login({ name: "John Doe", email: "john@example.com" });
-    navigate("/");
-  };
-
   return (
     <AuthCard
       iconName="login"
@@ -30,7 +20,7 @@ export default function SignUp() {
         </>
       }
     >
-      <SignUpForm onSuccess={handleSignUpSuccess} />
+      <SignUpForm />
     </AuthCard>
   );
 }
